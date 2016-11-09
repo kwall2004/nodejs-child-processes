@@ -8,9 +8,13 @@ amqp.connect('amqp://localhost', function (err, conn) {
 
     ch.assertQueue(queueName, { durable: true });
     for (i = 0; i < number; i++) {
-      ch.sendToQueue(queueName, new Buffer(message + i));
+      ch.sendToQueue(queueName, new Buffer(message + i), { persistent: true });
       console.log(" [x] Sent %s", message + i);
     }
   });
-  setTimeout(function () { conn.close(); process.exit(0) }, 500);
+
+  // setTimeout(function () {
+  //   conn.close(); 
+  //   process.exit(0);
+  // }, 500);
 });
